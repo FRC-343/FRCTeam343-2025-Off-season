@@ -30,7 +30,7 @@ public class BobotState extends VirtualSubsystem {
 
   private static Pose2d globalPose = new Pose2d();
 
-  private static boolean ElevatorBeam;
+  private static boolean elevatorBeam;
 
   private static boolean climberState;
 
@@ -49,6 +49,8 @@ public class BobotState extends VirtualSubsystem {
   private static boolean intakeBeam2;
 
   private static double elevatorPose;
+
+  private static double armPose;
 
   private static ReefTagTracker reefTracker = new ReefTagTracker();
   private static HPSTagTracker hpsTracker = new HPSTagTracker();
@@ -72,6 +74,10 @@ public class BobotState extends VirtualSubsystem {
     BobotState.elevatorPose = pose;
   }
 
+  public static void updateArmPose(double pose) {
+    BobotState.armPose = pose;
+  }
+
   public static void updateIntakeBeam1(boolean beam) {
     BobotState.intakeBeam1 = beam;
   }
@@ -89,7 +95,7 @@ public class BobotState extends VirtualSubsystem {
   }
 
   public static void updateElevatorBeam(boolean beam) {
-    BobotState.ElevatorBeam = beam;
+    BobotState.elevatorBeam = beam;
   }
 
   public static void updateWantedPose(boolean perpPoseWanted) {
@@ -184,8 +190,8 @@ public class BobotState extends VirtualSubsystem {
   }
 
   public static Trigger ElevatorBeam() {
-    System.out.println(BobotState.ElevatorBeam);
-    return new Trigger(() -> BobotState.ElevatorBeam);
+    System.out.println(BobotState.elevatorBeam);
+    return new Trigger(() -> BobotState.elevatorBeam);
   }
 
   public static Trigger ElevatorSlowdown1() {
@@ -204,6 +210,10 @@ public class BobotState extends VirtualSubsystem {
     return new Trigger(() -> (BobotState.elevatorPose < .5));
   }
 
+  public static double armPose() {
+    return BobotState.armPose;
+  }
+
   @Override
   public void periodic() {
 
@@ -218,7 +228,7 @@ public class BobotState extends VirtualSubsystem {
 
     Logger.recordOutput(logRoot + "Climber limit", climberState);
 
-    Logger.recordOutput(logRoot + "Elevator Beam", ElevatorBeam);
+    Logger.recordOutput(logRoot + "Elevator Beam", elevatorBeam);
 
     Logger.recordOutput(logRoot + "Wanted Perp Pose", atWantedPerpPose);
 
