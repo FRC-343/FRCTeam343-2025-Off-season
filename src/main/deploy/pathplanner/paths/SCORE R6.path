@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.35,
+        "y": 5.45
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.174566527249104,
+        "y": 5.271890211839549
+      },
+      "isLocked": false,
+      "linkedName": "R6 Elevator Point"
+    },
+    {
+      "anchor": {
+        "x": 5.1499999999999995,
+        "y": 5.18
+      },
+      "prevControl": {
+        "x": 5.301536532129467,
+        "y": 5.378838324852566
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "R6 REEF POINT"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.85036528698409
+  },
+  "reversed": false,
+  "folder": "LEFT START PATHS",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -119.79461720416613
+  },
+  "useDefaultConstraints": false
+}

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.34,
+        "y": 7.21
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0043170004725086,
+        "y": 6.702998921752231
+      },
+      "isLocked": false,
+      "linkedName": "AT HP"
+    },
+    {
+      "anchor": {
+        "x": 3.64,
+        "y": 5.49
+      },
+      "prevControl": {
+        "x": 2.85204131008428,
+        "y": 6.045133975008695
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "R5 Elevator point"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.33163701523138
+  },
+  "reversed": false,
+  "folder": "FROM HP",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -52.926926682689604
+  },
+  "useDefaultConstraints": true
+}

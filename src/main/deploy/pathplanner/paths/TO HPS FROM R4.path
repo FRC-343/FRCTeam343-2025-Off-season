@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.171,
+        "y": 4.01
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.163746352077632,
+        "y": 3.7956062528167056
+      },
+      "isLocked": false,
+      "linkedName": "R4 Reef Point"
+    },
+    {
+      "anchor": {
+        "x": 1.34,
+        "y": 7.21
+      },
+      "prevControl": {
+        "x": 1.575904905727872,
+        "y": 6.782054029888487
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "AT HP"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.148481439820015,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 2.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -52.926926682689604
+  },
+  "reversed": false,
+  "folder": "FROM HP",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

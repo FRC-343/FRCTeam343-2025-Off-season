@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.156327431590876,
+        "y": 2.913587659730199
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.654730350214693,
+        "y": 2.1126222819353973
+      },
+      "isLocked": false,
+      "linkedName": "R2 Reef Point"
+    },
+    {
+      "anchor": {
+        "x": 1.2048148978417834,
+        "y": 0.980974583497258
+      },
+      "prevControl": {
+        "x": 1.5391585815386297,
+        "y": 1.1740145394466064
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "At HP2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.36445444319460557,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 54.1780790001624
+  },
+  "reversed": false,
+  "folder": "RIGHT START",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 120.34251769127629
+  },
+  "useDefaultConstraints": true
+}

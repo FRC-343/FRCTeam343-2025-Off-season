@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2048148978417834,
+        "y": 0.980974583497258
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6470731210601484,
+        "y": 1.2989383061242192
+      },
+      "isLocked": false,
+      "linkedName": "At HP2"
+    },
+    {
+      "anchor": {
+        "x": 3.644272484534903,
+        "y": 2.6506115808057507
+      },
+      "prevControl": {
+        "x": 2.8056345504962694,
+        "y": 2.1317041938632975
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "R3 Elevator point"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.598372701852924
+  },
+  "reversed": false,
+  "folder": "FROM HP2",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 54.1780790001624
+  },
+  "useDefaultConstraints": true
+}
