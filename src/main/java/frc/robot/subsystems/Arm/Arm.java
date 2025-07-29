@@ -12,12 +12,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
-import frc.robot.LimitSwitch.LimitSwitchDigitalInput;
-import frc.robot.LimitSwitch.LimitSwitchIO;
-import frc.robot.LimitSwitch.LimitSwitchIOInputsAutoLogged;
-import frc.robot.beambreak.BeambreakDigitalInput;
-import frc.robot.beambreak.BeambreakIO;
-import frc.robot.beambreak.BeambreakIOInputsAutoLogged;
 import frc.robot.bobot_state2.BobotState;
 import frc.robot.util.Constant;
 import frc.robot.util.Constant.ArmConstants;
@@ -31,21 +25,17 @@ import org.littletonrobotics.junction.Logger;
 public class Arm extends SubsystemBase {
   private final ArmMotorIO io;
 
-
   boolean test = false;
 
   private final ArmMotorIOInputsAutoLogged inputs = new ArmMotorIOInputsAutoLogged();
-
 
   private final PIDController pidController =
       new PIDController(
           0.5, // Replace with actual PID values when on the bot
           0, 0);
 
-  private final ArmVisualizer measuredVisualizer =
-      new ArmVisualizer("Measured", Color.kBlack);
-  private final ArmVisualizer setpointVisualizer =
-      new ArmVisualizer("Setpoint", Color.kGreen);
+  private final ArmVisualizer measuredVisualizer = new ArmVisualizer("Measured", Color.kBlack);
+  private final ArmVisualizer setpointVisualizer = new ArmVisualizer("Setpoint", Color.kGreen);
 
   private double setpointInches = 0.0;
 
@@ -57,7 +47,6 @@ public class Arm extends SubsystemBase {
         break;
       case SIM:
         io = new ArmMotorSim(DCMotor.getKrakenX60(1), 3, 1, new PIDConstants(1, 0, 0));
-
 
         break;
       case REPLAY:
@@ -72,15 +61,12 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     this.io.updateInputs(this.inputs);
 
-
     Logger.processInputs("Arm", this.inputs);
 
     if (DriverStation.isDisabled()) {
       this.setSetpoint(0.0);
       this.io.stop();
     }
-
-
 
     Logger.recordOutput("Arm/SetpointInches", setpointInches);
 
@@ -93,7 +79,6 @@ public class Arm extends SubsystemBase {
 
     // BobotState.setArmUp(this.inputs.masterPositionRad >= 1.0);
 
-
     BobotState.updateArmPose(this.inputs.masterPositionRad);
     // limitIsTriggered().onTrue(resetEncoder());
     // BackupLimitIsTriggerd().onTrue(resetEncoder());
@@ -101,8 +86,6 @@ public class Arm extends SubsystemBase {
   }
 
   // These needs to be reorganized
-
-
 
   private void setSetpoint(double setpoint) {
     setpointInches = MathUtil.clamp(setpoint, 0, 56); // not real value
@@ -133,24 +116,21 @@ public class Arm extends SubsystemBase {
   public Command setArmPositionL4() {
     System.out.println(ArmNearL4().getAsBoolean());
 
-    return new RunCommand(
-            () -> this.io.setArmPosition(Constant.ArmConstants.L4Level), this)
+    return new RunCommand(() -> this.io.setArmPosition(Constant.ArmConstants.L4Level), this)
         .until(ArmNearL4());
   }
 
   public Command setArmPositionL3() {
     System.out.println(ArmNearL3().getAsBoolean());
 
-    return new RunCommand(
-            () -> this.io.setArmPosition(Constant.ArmConstants.L3Level), this)
+    return new RunCommand(() -> this.io.setArmPosition(Constant.ArmConstants.L3Level), this)
         .until(ArmNearL3());
   }
 
   public Command setArmPositionL2() {
     System.out.println(ArmNearL2().getAsBoolean());
 
-    return new RunCommand(
-            () -> this.io.setArmPosition(Constant.ArmConstants.L2Level), this)
+    return new RunCommand(() -> this.io.setArmPosition(Constant.ArmConstants.L2Level), this)
         .until(ArmNearL2());
   }
 
@@ -163,20 +143,17 @@ public class Arm extends SubsystemBase {
 
   public Trigger ArmNearL4() {
     return new Trigger(
-        () ->
-            MathUtil.isNear(Constant.ArmConstants.L4Level, this.inputs.masterPositionRad, 1));
+        () -> MathUtil.isNear(Constant.ArmConstants.L4Level, this.inputs.masterPositionRad, 1));
   }
 
   public Trigger ArmNearL3() {
     return new Trigger(
-        () ->
-            MathUtil.isNear(Constant.ArmConstants.L3Level, this.inputs.masterPositionRad, 1));
+        () -> MathUtil.isNear(Constant.ArmConstants.L3Level, this.inputs.masterPositionRad, 1));
   }
 
   public Trigger ArmNearL2() {
     return new Trigger(
-        () ->
-            MathUtil.isNear(Constant.ArmConstants.L2Level, this.inputs.masterPositionRad, 1));
+        () -> MathUtil.isNear(Constant.ArmConstants.L2Level, this.inputs.masterPositionRad, 1));
   }
 
   public Trigger higherThanL4() {
@@ -202,8 +179,6 @@ public class Arm extends SubsystemBase {
   public Command resetEncoder() {
     return new InstantCommand(this.io::resetEncoder, this);
   }
-
-  
 
   public Trigger ArmIsDown() {
     return new Trigger(() -> MathUtil.isNear(0, this.inputs.masterPositionRad, 1));

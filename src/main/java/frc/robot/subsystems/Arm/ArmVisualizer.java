@@ -23,8 +23,7 @@ public class ArmVisualizer {
     this.key = key;
     mechanism = new LoggedMechanism2d(3.0, 3.0, new Color8Bit(Color.kWhite));
     LoggedMechanismRoot2d root = mechanism.getRoot("Arm", 1.0, 0.4);
-    Arm =
-        new LoggedMechanismLigament2d("Arm", ArmLength, 90.0, 6, new Color8Bit(color));
+    Arm = new LoggedMechanismLigament2d("Arm", ArmLength, 90.0, 6, new Color8Bit(color));
 
     Arm.append(
         new LoggedMechanismLigament2d(
@@ -40,10 +39,7 @@ public class ArmVisualizer {
     // Log 3d poses
     Pose3d Arm =
         new Pose3d(
-            ArmOrigin.getX(),
-            ArmOrigin.getY() + this.Arm.getLength(),
-            0.0,
-            new Rotation3d());
+            ArmOrigin.getX(), ArmOrigin.getY() + this.Arm.getLength(), 0.0, new Rotation3d());
     Logger.recordOutput("Arm/Mechanisms/" + key + "/Pose3d", Arm);
   }
 }

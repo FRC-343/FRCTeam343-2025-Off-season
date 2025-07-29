@@ -117,60 +117,6 @@ public class Climber extends SubsystemBase {
     return new InstantCommand(() -> this.io.disEngage());
   }
 
-  // public Command setVolatageCommand(double voltage) {
-  //   return new RunCommand(() -> this.io.setElevatorVelocity(voltage), this);
-  // }
-
-  // public Command setVelocityCommand(double velocityRotPerSecond) {
-  //   return new InstantCommand(() -> this.io.setElevatorVelocity(velocityRotPerSecond), this);
-  // }
-  // public Trigger elevatorIsDown() {
-  //   return new Trigger(
-  //       () -> MathUtil.isNear(56, this.inputs.extentionAbsPos, 1.0));
-  // }
-
-  // public Trigger elevatorIsAtSubwooferShot() {
-  //   return new Trigger(
-  //       () ->
-  //           MathUtil.isNear(
-  //               ElevatorConstants.kSubwooferShotHeightInches, this.inputs.positionInches, 2.0));
-  // }
-
-  // public Trigger elevatorIsAtAmp() {
-  //   return new Trigger(
-  //       () ->
-  //           MathUtil.isNear(
-  //               ElevatorConstants.kAmpScoreHeightInches, this.inputs.positionInches, 1.0));
-  // }
-
-  // public Trigger elevatorIsAtTrap() {
-  //   return new Trigger(
-  //       () ->
-  //           MathUtil.isNear(
-  //               ElevatorConstants.kTrapScoreHeightInches, this.inputs.positionInches, 1.0));
-  // }
-
-  // public Trigger elevatorIsUp() {
-  //   return new Trigger(
-  //       () ->
-  //           MathUtil.isNear(
-  //               ElevatorConstants.kPivotClearanceHeightInches, this.inputs.positionInches, 1.0));
-  // }
-
-  // public void runPercentOutput(double percentDecimal) {
-  //   double output =
-  //       MetalUtils.percentWithSoftStops(
-  //           percentDecimal,
-  //           this.inputs.masterPositionRad + this.inputs.masterVelocityRadPerSec,
-  //           0,
-  //           0);
-  //   this.io.setPercentOutput(output);
-  // }
-
-  // public Command runPercentOutputCommand(Double percentDecimal) {
-  //   return new InstantCommand(() -> this.runPercentOutput(percentDecimal), this);
-  // }
-
   public Trigger limitIsTriggered() {
     return new Trigger(() -> this.LimitSwitchInputs.isObstructed);
   }

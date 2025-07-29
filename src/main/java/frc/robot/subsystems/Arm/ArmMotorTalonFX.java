@@ -7,7 +7,6 @@ import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -29,8 +28,6 @@ public class ArmMotorTalonFX implements ArmMotorIO {
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Angle> position;
   private final StatusSignal<Current> current;
-
-
 
   private final VelocityVoltage velocityVoltage = new VelocityVoltage(0);
   private final DutyCycleOut dutyCycleOut = new DutyCycleOut(0);
@@ -65,22 +62,14 @@ public class ArmMotorTalonFX implements ArmMotorIO {
                         .withMotionMagicCruiseVelocity(70)
                         .withMotionMagicJerk(200)));
     velocityVoltage.Slot = 0;
-
-    
   }
 
   public void updateInputs(ArmMotorIOInputs inputs) {
-    StatusSignal.refreshAll(
-        velocity,
-        dutyCycle,
-        voltage,
-        position);
+    StatusSignal.refreshAll(velocity, dutyCycle, voltage, position);
     inputs.masterAppliedVolts = voltage.getValueAsDouble();
     inputs.masterVelocityRadPerSec = velocity.getValueAsDouble();
     inputs.masterPositionRad = position.getValueAsDouble();
     inputs.masterCurrentAmps = current.getValueAsDouble();
-
-    
 
     // inputs.extentionAbsPos = absEnc.getPosition();
   }

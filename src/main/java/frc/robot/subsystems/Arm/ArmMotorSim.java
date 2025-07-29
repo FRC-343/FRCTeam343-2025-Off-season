@@ -16,8 +16,7 @@ public class ArmMotorSim implements ArmMotorIO {
   private double appliedVoltage = 0.0;
   private final PIDController controller;
 
-  public ArmMotorSim(
-      DCMotor motorModel, double reduction, double moi, PIDConstants pidConstants) {
+  public ArmMotorSim(DCMotor motorModel, double reduction, double moi, PIDConstants pidConstants) {
     sim =
         new DCMotorSim(LinearSystemId.createDCMotorSystem(motorModel, moi, reduction), motorModel);
     controller = new PIDController(pidConstants.kP, pidConstants.kI, pidConstants.kD);

@@ -13,12 +13,6 @@ public interface ClimberIO {
     public double masterAppliedVolts = 0.0;
     public double masterCurrentAmps = 0.0;
 
-    public boolean followerConnected = false;
-    public double followerPositionRad = 0.0;
-    public double followerVelocityRadPerSec = 0.0;
-    public double followerAppliedVolts = 0.0;
-    public double followerCurrentAmps = 0.0;
-
     public double extentionAbsPos = 0.0;
 
     public Rotation2d extentionPos = new Rotation2d();
