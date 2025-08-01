@@ -18,7 +18,7 @@ import frc.robot.commands.DrivePerpendicularToPoseCommand;
 import frc.robot.commands.DriveToPoseCommand;
 import frc.robot.field.FieldUtils;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber.Climber;
+import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Elevator.Elevator;
 import frc.robot.subsystems.Intake.Intake;
 import frc.robot.subsystems.Leds.LED;
@@ -54,13 +54,15 @@ public class RobotContainer {
 
   private final Elevator elevator;
 
-  private final Climber climber;
+  //   private final Climber climber;
 
   private final Intake intake;
 
   private final LEDInput led;
 
   private final LED m_LEDs = LED.getInstance();
+
+  private final Arm arm;
 
   // Controller
   private final CommandCustomController controller = new CommandCustomController(0);
@@ -92,7 +94,8 @@ public class RobotContainer {
         m_Automation = new DriverAutomationFactory(controller, controller2, drive);
         elevator = new Elevator();
         intake = new Intake();
-        climber = new Climber();
+        // climber = new Climber();
+        arm = new Arm();
 
         break;
 
@@ -122,7 +125,8 @@ public class RobotContainer {
 
         elevator = new Elevator();
         intake = new Intake();
-        climber = new Climber();
+        // climber = new Climber();
+        arm = new Arm();
         break;
 
       default:
@@ -145,7 +149,8 @@ public class RobotContainer {
 
         elevator = new Elevator();
         intake = new Intake();
-        climber = new Climber();
+        // climber = new Climber();
+        arm = new Arm();
         break;
     }
     configureNamedCommands();
@@ -323,7 +328,7 @@ public class RobotContainer {
 
   private void configureOperatorButton() {
 
-    // Test Controlls
+    // Test Controls
 
     controller2
         .leftTrigger()
@@ -335,7 +340,7 @@ public class RobotContainer {
         .leftTrigger()
         .and(BobotState.elevatorAtFeed().negate())
         .whileTrue(elevator.setElevatorPosition(elevatorConstants.FEED));
-    // "Intake" Controlls
+    // "Intake" Controls
 
     controller2
         .povLeft()
@@ -363,52 +368,67 @@ public class RobotContainer {
     controller2
         .y()
         .and(controller2.rightBumper().negate())
-        .whileTrue(elevator.setElevatorPosition(elevatorConstants.Barge));
+        .whileTrue(
+            elevator
+                .setElevatorPosition(elevatorConstants.Barge)
+                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     controller2
         .rightStick()
         .and(controller2.rightBumper().negate())
-        .whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L2AlgeaLevel));
+        .whileTrue(
+            elevator
+                .setElevatorPosition(Constant.elevatorConstants.L2AlgeaLevel)
+                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(true))));
 
     controller2
         .a()
         .and(controller2.rightBumper().negate())
-        .whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L3Level));
+        .whileTrue(
+            elevator
+                .setElevatorPosition(Constant.elevatorConstants.L3Level)
+                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     controller2
         .x()
         .and(controller2.rightBumper().negate())
-        .whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L4Level));
+        .whileTrue(
+            elevator
+                .setElevatorPosition(Constant.elevatorConstants.L4Level)
+                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     controller2
         .b()
         .and(controller2.rightBumper().negate())
-        .whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L2Level));
+        .whileTrue(
+            elevator
+                .setElevatorPosition(Constant.elevatorConstants.L2Level)
+                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     // Climber Buttons
 
-    controller2
-        .rightBumper()
-        .whileTrue(new RunCommand(() -> m_LEDs.servoState()))
-        .onFalse(new InstantCommand(() -> m_LEDs.Idle()));
+    // controller2
+    //     .rightBumper()
+    //     .whileTrue(new RunCommand(() -> m_LEDs.servoState()))
+    //     .onFalse(new InstantCommand(() -> m_LEDs.Idle()));
 
-    controller2
-        .pov(180)
-        .and(controller2.rightBumper())
-        .whileTrue(climber.runBack(-.2))
-        .whileFalse(climber.runBack(0));
+    // controller2
+    //     .pov(180)
+    //     .and(controller2.rightBumper())
+    //     .whileTrue(climber.runBack(-.2))
+    //     .whileFalse(climber.runBack(0));
 
-    controller2
-        .pov(0)
-        .and(controller2.rightBumper())
-        .whileTrue(climber.setPercentOutputCommand(1))
-        .whileFalse(climber.setPercentOutputCommand(0));
+    // controller2
+    //     .pov(0)
+    //     .and(controller2.rightBumper())
+    //     .whileTrue(climber.setPercentOutputCommand(1))
+    //     .whileFalse(climber.setPercentOutputCommand(0));
 
-    controller2.y().and(controller2.rightBumper()).onTrue(climber.goForRotForward(64));
-    controller2.a().and(controller2.rightBumper()).onTrue(climber.goForRotBack(28));
+    // controller2.y().and(controller2.rightBumper()).onTrue(climber.goForRotForward(64));
+    // controller2.a().and(controller2.rightBumper()).onTrue(climber.goForRotBack(28));
 
-    controller2.b().and(controller2.rightBumper()).onTrue(climber.Disengage());
-    controller2.x().and(controller2.rightBumper()).onTrue(climber.Engage());
+    // controller2.b().and(controller2.rightBumper()).onTrue(climber.Disengage());
+    // controller2.x().and(controller2.rightBumper()).onTrue(climber.Engage());
 
     // Auto Intake test
 
@@ -435,5 +455,8 @@ public class RobotContainer {
 
   public void Automation() {
     BobotState.intakeBeam().onTrue(intake.HPintake());
+    BobotState.armPoseNoGo()
+        .onTrue(
+            arm.setArmPosition(0)); // This will need to be updated to reflect the actual positions.
   }
 }

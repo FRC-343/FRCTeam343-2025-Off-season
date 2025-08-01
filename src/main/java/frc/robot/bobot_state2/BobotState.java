@@ -28,29 +28,52 @@ public class BobotState extends VirtualSubsystem {
 
   private static final Queue<PoseObservation> poseObservations = new LinkedBlockingQueue<>(20);
 
-  private static Pose2d globalPose = new Pose2d();
+  private static boolean grabMode =
+      false; // False means Coral, True means Algae. Better ways of implementing this is just for
+  // offseason comp. This is going to be used for automation.
 
-  private static boolean elevatorBeam;
+  private static Pose2d globalPose = new Pose2d(); // Robots position on the field.
 
-  private static boolean climberState;
+  private static boolean
+      elevatorBeam; // Elevator beam break, not needed on offseason bot, but was used to determine
+  // if the elevator was clear since we passed coral through it.
 
-  private static boolean atWantedPerpPose;
+  private static boolean
+      climberState; // Climber limit switch, not needed on offseason bot(yet), but was used to
+  // determine if the climber was on the limit switch or not.
 
-  private static boolean atWantedRot;
+  private static boolean
+      atWantedPerpPose; // Robots perpendicular position in relation to whatever Apriltag we are
+  // lining up to.
 
-  private static boolean atWantedParaPose;
+  private static boolean
+      atWantedRot; // Robots rotation in relation to whatever Apriltag we are lining up to
 
-  private static boolean elevatorHigherThanL3;
+  private static boolean
+      atWantedParaPose; // Robots parallel position in relation to whatever Apriltag we are lining
+  // up to
 
-  private static boolean elevatorHigherThanL4;
+  private static boolean
+      elevatorHigherThanL3; // Used to see if the elevator was higher than our L3 level so we could
+  // slow the robot down(shouldnt be an issue on offseason bot yet to see)
 
-  private static boolean intakeBeam1;
+  private static boolean
+      elevatorHigherThanL4; // Used to see if the elevator was higher than our L4 level so we could
+  // slow the robot down(shouldnt be an issue on offseason bot yet to see
 
-  private static boolean intakeBeam2;
+  private static boolean
+      intakeBeam1; // Intake beam break, not needed on offseason bot, but was used to see if there
+  // was a coral in the intake to run the intake wheels(should be replaced by a
+  // limit switch for simplicity on offseason bot)
 
-  private static double elevatorPose;
+  private static boolean
+      intakeBeam2; // Intake beam break, not needed on offseason bot, but was used to see if there
+  // was a coral in the intake to run the intake wheels(should be replaced by a
+  // limit switch for simplicity on offseason bot)
 
-  private static double armPose;
+  private static double elevatorPose; // Elevators current position.
+
+  private static double armPose; // Arms current position.
 
   private static ReefTagTracker reefTracker = new ReefTagTracker();
   private static HPSTagTracker hpsTracker = new HPSTagTracker();
@@ -65,6 +88,10 @@ public class BobotState extends VirtualSubsystem {
           BobotState.reefTracker,
           BobotState.processorTracker,
           BobotState.bargeTracker);
+
+  public static void updateGrabMode(boolean mode) {
+    BobotState.grabMode = mode;
+  }
 
   public static void updateNearness(String test) {
     BobotState.wantNearWhat = test;
@@ -155,6 +182,10 @@ public class BobotState extends VirtualSubsystem {
     return new Trigger(() -> (BobotState.intakeBeam1 || BobotState.intakeBeam2));
   }
 
+  public static Trigger armPoseNoGo() {
+    return new Trigger(() -> BobotState.armPose > 2);
+  }
+
   public static Rotation2d getRotationToProcessor() {
     return BobotState.processorTracker.getRotationTarget();
   }
@@ -218,6 +249,8 @@ public class BobotState extends VirtualSubsystem {
   public void periodic() {
 
     Logger.recordOutput(logRoot + "Wanted to be near", wantNearWhat);
+
+    Logger.recordOutput(logRoot + "Arm Pose", armPose);
 
     Logger.recordOutput(logRoot + "Intake Beam 1", intakeBeam1);
 
