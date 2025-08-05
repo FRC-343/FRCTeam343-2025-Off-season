@@ -1,10 +1,10 @@
-package frc.robot.subsystems.vision2;
+package frc.robot.subsystems.vision;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import frc.robot.subsystems.vision2.VisionConstants.PoseEstimationMethod;
+import frc.robot.subsystems.vision.VisionConstants.PoseEstimationMethod;
 
 public record PoseObservation(
     Pose3d robotPose,

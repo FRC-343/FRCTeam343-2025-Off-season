@@ -1,4 +1,4 @@
-package frc.robot.subsystems.vision2;
+package frc.robot.subsystems.vision;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -25,7 +25,7 @@ public class Vision extends VirtualSubsystem {
   private static final String aggregateAprilTagLogRoot = "AggregateAprilTagCameras";
 
   public Vision() {
-    for (frc.robot.subsystems.vision2.VisionConstants.AprilTagCameraConfig config :
+    for (frc.robot.subsystems.vision.VisionConstants.AprilTagCameraConfig config :
         VisionConstants.aprilTagCamerasConfigs) {
       AprilTagIO io;
 

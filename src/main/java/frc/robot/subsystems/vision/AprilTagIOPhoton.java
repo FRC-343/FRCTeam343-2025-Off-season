@@ -1,4 +1,4 @@
-package frc.robot.subsystems.vision2;
+package frc.robot.subsystems.vision;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import frc.robot.subsystems.vision2.VisionConstants.PoseEstimationMethod;
+import frc.robot.subsystems.vision.VisionConstants.PoseEstimationMethod;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

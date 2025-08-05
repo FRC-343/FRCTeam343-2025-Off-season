@@ -1,4 +1,4 @@
-package frc.robot.subsystems.vision2;
+package frc.robot.subsystems.vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import org.photonvision.simulation.PhotonCameraSim;

@@ -11,7 +11,7 @@ import frc.robot.bobot_state2.varc.ReefTagTracker;
 import frc.robot.bobot_state2.varc.TargetAngleTracker;
 import frc.robot.field.FieldConstants;
 import frc.robot.field.FieldUtils;
-import frc.robot.subsystems.vision2.PoseObservation;
+import frc.robot.subsystems.vision.PoseObservation;
 import frc.robot.util.VirtualSubsystem;
 import java.util.List;
 import java.util.Queue;
@@ -75,101 +75,129 @@ public class BobotState extends VirtualSubsystem {
 
   private static double armPose; // Arms current position.
 
+  //keeps track of the closest tag on the reef to the robot
   private static ReefTagTracker reefTracker = new ReefTagTracker();
+  //keeps track of the tag on the human processing station
   private static HPSTagTracker hpsTracker = new HPSTagTracker();
+  //keeps track of closest tag on barge
   private static BargeTagTracker bargeTracker = new BargeTagTracker();
+  //keeps track of the tag for the processor
   private static ProcessorTagTracker processorTracker = new ProcessorTagTracker();
 
-  private static String wantNearWhat = "";
+  //test item
+  /*private static String wantNearWhat = "";*/
 
+  //tracks the target angle for alignment
   private static List<TargetAngleTracker> autoAlignmentTrackers =
+    //list of the trackers
       List.of(
           BobotState.hpsTracker,
           BobotState.reefTracker,
           BobotState.processorTracker,
           BobotState.bargeTracker);
 
+  //boolean for the grab mode
   public static void updateGrabMode(boolean mode) {
     BobotState.grabMode = mode;
   }
 
-  public static void updateNearness(String test) {
+  //test case for updating the nearest target
+  /* public static void updateNearness(String test) {
     BobotState.wantNearWhat = test;
-  }
+  }*/
 
+  //tracks the elevator pose
   public static void updateElevatorPose(double pose) {
     BobotState.elevatorPose = pose;
   }
 
+  //tracks the arm pose
   public static void updateArmPose(double pose) {
     BobotState.armPose = pose;
   }
 
+  //COMMENTING EXCERISE WITH THE KIDS
   public static void updateIntakeBeam1(boolean beam) {
     BobotState.intakeBeam1 = beam;
   }
 
+  //COMMENTING EXCERISE WITH THE KIDS
   public static void updateIntakeBeam2(boolean beam) {
     BobotState.intakeBeam2 = beam;
   }
 
+  //updating elevator state, if elevator is past L3
   public static void updateElevatorState(boolean state) {
     BobotState.elevatorHigherThanL3 = state;
   }
 
+  //updating elevator state: electric boogaloo, same but L4
   public static void updateElevatorState2(boolean state) {
     BobotState.elevatorHigherThanL4 = state;
   }
 
+  //updating if elevator is clear
   public static void updateElevatorBeam(boolean beam) {
     BobotState.elevatorBeam = beam;
   }
 
+  //updating the perpendicular wanted pose
   public static void updateWantedPose(boolean perpPoseWanted) {
     BobotState.atWantedPerpPose = perpPoseWanted;
   }
 
+  //updating the parallel wanted pose
   public static void updateWantedParaPose(boolean paraPoseWanted) {
     BobotState.atWantedParaPose = paraPoseWanted;
   }
 
+  //updating the wanted rotation
   public static void updateWantedRot(boolean rotWanted) {
     BobotState.atWantedRot = rotWanted;
   }
 
+  //self-explanatory
   public static void updateClimberState(boolean state) {
     BobotState.climberState = state;
   }
 
+  //LOOK AT LATER
   public static void offerVisionObservation(PoseObservation observation) {
     BobotState.poseObservations.offer(observation);
   }
 
+  //SAME
   public static Queue<PoseObservation> getVisionObservations() {
     return BobotState.poseObservations;
   }
 
+  //sel-explanatory
   public static void updateGlobalPose(Pose2d pose) {
     BobotState.globalPose = pose;
   }
 
+  //self-explanatory
   public static Pose2d getGlobalPose() {
     return BobotState.globalPose;
   }
 
+  //test for getting what the robot is near
   public static String getNearWhat() {
     return BobotState.wantNearWhat;
   }
 
+  //s-e
   public static boolean getClimberState() {
     return BobotState.climberState;
   }
 
+  //s-e
   public static Trigger atWantedPose() {
     return new Trigger(
         () -> BobotState.atWantedParaPose && BobotState.atWantedPerpPose && BobotState.atWantedRot);
   }
 
+  //checks what team's side you are on
   public static Trigger onTeamSide() {
     return new Trigger(
         () ->
@@ -178,73 +206,90 @@ public class BobotState extends VirtualSubsystem {
                 : getGlobalPose().getX() > FieldConstants.fieldLength / 2.0);
   }
 
+  //essentially boolean, outputs whichever is true
   public static Trigger intakeBeam() {
     return new Trigger(() -> (BobotState.intakeBeam1 || BobotState.intakeBeam2));
   }
 
+  //checks if the arm pose is past a certain point within rotation (past or before 90deg)
   public static Trigger armPoseNoGo() {
     return new Trigger(() -> BobotState.armPose > 2);
   }
 
+  //sending rotation to the processor
   public static Rotation2d getRotationToProcessor() {
     return BobotState.processorTracker.getRotationTarget();
   }
 
+  //gets your rotation to the reef
   public static Rotation2d getRotationToClosestReef() {
     return BobotState.reefTracker.getRotationTarget();
   }
 
+  //gets rotation towards the HPS
   public static Rotation2d getRotationToClosestHPS() {
     return BobotState.hpsTracker.getRotationTarget();
   }
 
+  //gets rotation to barge
   public static Rotation2d getRotationToClosestBarge() {
     return BobotState.bargeTracker.getRotationTarget();
   }
 
+  //gets distance from the HPS
   public static double getDistanceMetersFromClosestHPS() {
     return BobotState.hpsTracker.getDistanceMeters();
   }
 
+  //test case to trigger lights (can do something w/ later)
   public static Trigger humanPlayerShouldThrow() {
     return new Trigger(() -> BobotState.hpsTracker.getDistanceMeters() < 0.5);
   }
 
+  //boolean if near the HPS
   public static Trigger nearHumanPlayer() {
     return new Trigger(() -> BobotState.hpsTracker.getDistanceMeters() < 1);
   }
 
+  //getting the nearest tag to the robot
   public static TargetAngleTracker getClosestAlignmentTracker() {
     return autoAlignmentTrackers.stream()
         .reduce((a, b) -> a.getDistanceMeters() < b.getDistanceMeters() ? a : b)
         .get();
   }
 
+  //returns the state of the elevator beam
   public static Trigger ElevatorBeam() {
-    System.out.println(BobotState.elevatorBeam);
+    //(testing) System.out.println(BobotState.elevatorBeam);
     return new Trigger(() -> BobotState.elevatorBeam);
   }
 
+  //triggers slowing down the elevator if past L3
   public static Trigger ElevatorSlowdown1() {
     return new Trigger(() -> BobotState.elevatorHigherThanL3);
   }
 
+  //triggers slowing down the elevator if past L4
   public static Trigger ElevatorSlowdown2() {
     return new Trigger(() -> BobotState.elevatorHigherThanL4);
   }
 
+  //getter for elevator's position during travel
   public static double ElevatorPose() {
     return BobotState.elevatorPose;
   }
 
+  //boolean for is the elevator is at the feeding position
   public static Trigger elevatorAtFeed() {
     return new Trigger(() -> (BobotState.elevatorPose < .5));
   }
 
+  //getter for the arm pose
   public static double armPose() {
     return BobotState.armPose;
   }
 
+  //logs
   @Override
   public void periodic() {
 
@@ -328,6 +373,7 @@ public class BobotState extends VirtualSubsystem {
     }
   }
 
+  //used for vision within sim
   @Override
   public void simulationPeriodic() {}
 }
