@@ -19,6 +19,7 @@ public class Module {
           TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
       constants;
 
+  //alerts
   private final Alert driveDisconnectedAlert;
   private final Alert turnDisconnectedAlert;
   private final Alert turnEncoderDisconnectedAlert;

@@ -82,8 +82,10 @@ public class ModuleIOTalonFX implements ModuleIO {
   private final Debouncer turnConnectedDebounce = new Debouncer(0.5);
   private final Debouncer turnEncoderConnectedDebounce = new Debouncer(0.5);
 
+  //music
   private final Orchestra m_orchestra = new Orchestra();
 
+  //DO NOT TOUCH, important to know if making your own subclass
   public ModuleIOTalonFX(
       SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>
           constants) {
