@@ -35,7 +35,6 @@ import frc.robot.subsystems.vision2.Vision;
 // import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.CommandCustomController;
 import frc.robot.util.Constant;
-import frc.robot.util.Constant.elevatorConstants;
 import frc.robot.util.PoseUtils;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -359,14 +358,6 @@ public class RobotContainer {
         .whileTrue(intake.setPercentOutputThenStopCommandT1(-.8));
 
     // Elevator buttons
-
-    controller2
-        .y()
-        .and(controller2.rightBumper().negate())
-        .whileTrue(
-            elevator
-                .setElevatorPosition(elevatorConstants.Barge)
-                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     controller2
         .rightStick()
