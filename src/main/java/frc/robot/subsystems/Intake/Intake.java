@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
     switch (Constants.currentMode) {
       case REAL:
-        io = new IntakeIOTalonFX(22, false);
+        io = new IntakeIOTalonFX(26, false);
         break;
       case SIM:
         io = new IntakeIOSim(DCMotor.getKrakenX60(1), 3, 1, new PIDConstants(1, 0, 0));
@@ -62,9 +62,8 @@ public class Intake extends SubsystemBase {
     return new WaitUntilCommand(BobotState.intakeBeam());
   }
 
-  public Command intakewithstop() {
-    return new RunCommand(() -> this.io.setPercentOutput(-.1), this)
-        .until(BobotState.ElevatorBeam());
+  public Command intakeWithNoStop() {
+    return new RunCommand(() -> this.io.setPercentOutput(-.1), this);
   }
 
   public Command setVelocityCommand(double velocityRotPerSecond) {

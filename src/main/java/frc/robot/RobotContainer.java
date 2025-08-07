@@ -69,6 +69,8 @@ public class RobotContainer {
 
   private final CommandCustomController controller2 = new CommandCustomController(1);
 
+  private final CommandCustomController testController = new CommandCustomController(4);
+
   private final DriverAutomationFactory m_Automation;
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -182,6 +184,7 @@ public class RobotContainer {
     configureOperatorButton();
     configureDefaults();
     configureDriverButtons();
+    configureTestButtons();
 
     // configureAutomation();
 
@@ -330,16 +333,8 @@ public class RobotContainer {
 
     // Test Controls
 
-    controller2
-        .leftTrigger()
-        .and(BobotState.elevatorAtFeed())
-        .debounce(.5)
-        .onTrue(intake.HPintake());
+    controller2.leftTrigger().onTrue(intake.HPintake());
 
-    controller2
-        .leftTrigger()
-        .and(BobotState.elevatorAtFeed().negate())
-        .whileTrue(elevator.setElevatorPosition(elevatorConstants.FEED));
     // "Intake" Controls
 
     controller2
@@ -432,6 +427,15 @@ public class RobotContainer {
 
     // Auto Intake test
 
+  }
+
+  private void configureTestButtons() {
+    testController.a().whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L3Level));
+
+    testController.rightTrigger().whileTrue(intake.setVelocityThenStopCommand(-60));
+    testController.leftTrigger().whileTrue(intake.setVelocityThenStopCommand(30));
+
+    testController.povUp().whileTrue(arm.setArmPosition(-.6));
   }
 
   /**
