@@ -58,9 +58,9 @@ public class ArmMotorTalonFX implements ArmMotorIO {
                     new Slot0Configs().withKV(0.12).withKA(.01).withKP(5).withKI(0).withKD(0))
                 .withMotionMagic(
                     new MotionMagicConfigs()
-                        .withMotionMagicAcceleration(60)
-                        .withMotionMagicCruiseVelocity(40)
-                        .withMotionMagicJerk(200)));
+                        .withMotionMagicAcceleration(100)
+                        .withMotionMagicCruiseVelocity(100)
+                        .withMotionMagicJerk(600)));
     velocityVoltage.Slot = 0;
   }
 

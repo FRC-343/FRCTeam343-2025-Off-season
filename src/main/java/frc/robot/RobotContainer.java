@@ -426,7 +426,10 @@ public class RobotContainer {
     testController.rightTrigger().whileTrue(intake.setVelocityThenStopCommand(-60));
     testController.leftTrigger().whileTrue(intake.setVelocityThenStopCommand(30));
 
-    testController.povUp().whileTrue(arm.setArmPosition(-.6));
+    testController.povUp().whileTrue(arm.setArmPosition(.6));
+    testController.povDown().whileTrue(arm.setArmPosition(.03));
+
+    testController.povLeft().onTrue(arm.resetEncoder());
   }
 
   /**
