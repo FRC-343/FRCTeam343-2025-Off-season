@@ -42,7 +42,7 @@ public class Arm extends SubsystemBase {
   public Arm() {
     switch (Constants.currentMode) {
       case REAL:
-        io = new ArmMotorTalonFX(21);
+        io = new ArmMotorTalonFX(22);
 
         break;
       case SIM:

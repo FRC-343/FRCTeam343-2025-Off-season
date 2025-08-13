@@ -35,7 +35,6 @@ import frc.robot.subsystems.vision.Vision;
 // import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.CommandCustomController;
 import frc.robot.util.Constant;
-import frc.robot.util.Constant.elevatorConstants;
 import frc.robot.util.PoseUtils;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -68,6 +67,8 @@ public class RobotContainer {
   private final CommandCustomController controller = new CommandCustomController(0);
 
   private final CommandCustomController controller2 = new CommandCustomController(1);
+
+  private final CommandCustomController testController = new CommandCustomController(4);
 
   private final DriverAutomationFactory m_Automation;
   // Dashboard inputs
@@ -182,6 +183,7 @@ public class RobotContainer {
     configureOperatorButton();
     configureDefaults();
     configureDriverButtons();
+    configureTestButtons();
 
     // configureAutomation();
 
@@ -330,16 +332,8 @@ public class RobotContainer {
 
     // Test Controls
 
-    controller2
-        .leftTrigger()
-        .and(BobotState.elevatorAtFeed())
-        .debounce(.5)
-        .onTrue(intake.HPintake());
+    controller2.leftTrigger().onTrue(intake.HPintake());
 
-    controller2
-        .leftTrigger()
-        .and(BobotState.elevatorAtFeed().negate())
-        .whileTrue(elevator.setElevatorPosition(elevatorConstants.FEED));
     // "Intake" Controls
 
     controller2
@@ -364,14 +358,6 @@ public class RobotContainer {
         .whileTrue(intake.setPercentOutputThenStopCommandT1(-.8));
 
     // Elevator buttons
-
-    controller2
-        .y()
-        .and(controller2.rightBumper().negate())
-        .whileTrue(
-            elevator
-                .setElevatorPosition(elevatorConstants.Barge)
-                .alongWith(new InstantCommand(() -> BobotState.updateGrabMode(false))));
 
     controller2
         .rightStick()
@@ -432,6 +418,18 @@ public class RobotContainer {
 
     // Auto Intake test
 
+  }
+
+  private void configureTestButtons() {
+    testController.a().whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L3Level));
+
+    testController.rightTrigger().whileTrue(intake.setVelocityThenStopCommand(-60));
+    testController.leftTrigger().whileTrue(intake.setVelocityThenStopCommand(30));
+
+    testController.povUp().whileTrue(arm.setArmPosition(.6));
+    testController.povDown().whileTrue(arm.setArmPosition(.03));
+
+    testController.povLeft().onTrue(arm.resetEncoder());
   }
 
   /**
