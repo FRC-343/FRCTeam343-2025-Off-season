@@ -3,9 +3,7 @@ package frc.robot.subsystems.drive;
 import edu.wpi.first.math.geometry.Rotation2d;
 import org.littletonrobotics.junction.AutoLog;
 
-/**
- * logs for the gyro, to make your own sub-system
- */
+/** logs for the gyro, to make your own sub-system */
 public interface GyroIO {
   @AutoLog
   public static class GyroIOInputs {

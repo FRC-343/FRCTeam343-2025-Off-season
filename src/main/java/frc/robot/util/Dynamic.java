@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import frc.robot.bobot_state2.BobotState;
-
 public class Dynamic {
   public final class dynaPID {
 
@@ -16,15 +14,15 @@ public class Dynamic {
     public static Double slowAngleD = .1;
   }
 
-  public static double DynaPDriveTest() {
-    if (BobotState.getNearWhat() == "HPS") {
-      return Dynamic.dynaPID.slowDriveP;
-    } else if (BobotState.getNearWhat() == "Reef") {
-      return Dynamic.dynaPID.slowDriveP;
-    } else {
-      return Dynamic.dynaPID.fastDriveP;
-    }
-  }
+  // public static double DynaPDriveTest() {
+  //   if (BobotState.getNearWhat() == "HPS") {
+  //     return Dynamic.dynaPID.slowDriveP;
+  //   } else if (BobotState.getNearWhat() == "Reef") {
+  //     return Dynamic.dynaPID.slowDriveP;
+  //   } else {
+  //     return Dynamic.dynaPID.fastDriveP;
+  //   }
+  // }
 }
 
 // public class DriveCommandConstants {

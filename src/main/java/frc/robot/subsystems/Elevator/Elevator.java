@@ -34,7 +34,7 @@ public class Elevator extends SubsystemBase {
   private final LimitSwitchIO LimitSwitch;
   private final LimitSwitchIO LimitSwitchBackup;
 
-  //logs, dont touch
+  // logs, dont touch
   private final ElevatorMotorIOInputsAutoLogged inputs = new ElevatorMotorIOInputsAutoLogged();
   private final BeambreakIOInputsAutoLogged beambreakInputs = new BeambreakIOInputsAutoLogged();
   private final LimitSwitchIOInputsAutoLogged LimitSwitchInputs =
@@ -42,13 +42,13 @@ public class Elevator extends SubsystemBase {
   private final LimitSwitchIOInputsAutoLogged LimitSwitchBackupInputs =
       new LimitSwitchIOInputsAutoLogged();
 
-  //controlles the speed of the elevator
+  // controlles the speed of the elevator
   private final PIDController pidController =
       new PIDController(
           0.5, // Replace with actual PID values when on the bot
           0, 0);
 
-  //visualizes the elevator
+  // visualizes the elevator
   private final ElevatorVisualizer measuredVisualizer =
       new ElevatorVisualizer("Measured", Color.kBlack);
   private final ElevatorVisualizer setpointVisualizer =
@@ -58,7 +58,7 @@ public class Elevator extends SubsystemBase {
 
   public Elevator() {
     switch (Constants.currentMode) {
-      //actual robot case
+        // actual robot case
       case REAL:
         io = new ElevatorMotorTalonFX(21);
         beambreak = new BeambreakDigitalInput(9); // 3 and 2
@@ -66,7 +66,7 @@ public class Elevator extends SubsystemBase {
         LimitSwitchBackup = new LimitSwitchDigitalInput(1);
 
         break;
-        //simulated
+        // simulated
       case SIM:
         io = new ElevatorMotorSim(DCMotor.getKrakenX60(1), 3, 1, new PIDConstants(1, 0, 0));
         beambreak = new BeambreakDigitalInput(2);
@@ -74,7 +74,7 @@ public class Elevator extends SubsystemBase {
         LimitSwitchBackup = new LimitSwitchDigitalInput(1);
 
         break;
-        //s-e
+        // s-e
       case REPLAY:
       default:
         io = new ElevatorMotorIO() {};
@@ -85,7 +85,7 @@ public class Elevator extends SubsystemBase {
     }
   }
 
-  //logs and updates
+  // logs and updates
   @Override
   public void periodic() {
     this.io.updateInputs(this.inputs);
@@ -127,7 +127,7 @@ public class Elevator extends SubsystemBase {
 
   // These needs to be reorganized
 
-  //for simulation, s-e
+  // for simulation, s-e
   public Command overrideBeambreakObstructedCommand(boolean value) {
     return new InstantCommand(
         () -> {
@@ -135,23 +135,23 @@ public class Elevator extends SubsystemBase {
         });
   }
 
-  //set the point you want the elevator to be at
+  // set the point you want the elevator to be at
   private void setSetpoint(double setpoint) {
     setpointInches = MathUtil.clamp(setpoint, 0, 56); // not real value
     this.pidController.setSetpoint(this.setpointInches);
   }
 
-  //command for above
+  // command for above
   public Command setSetpointCommand(double positionInches) {
     return new InstantCommand(() -> this.setSetpoint(positionInches));
   }
 
-  //if the command is running right now
+  // if the command is running right now
   public Command setSetpointCurrentCommand() {
     return new InstantCommand(() -> this.setSetpoint(this.inputs.extentionAbsPos));
   }
 
-  //command for the PID
+  // command for the PID
   public Command pidCommand() {
     return new RunCommand(
         () -> {
@@ -161,13 +161,13 @@ public class Elevator extends SubsystemBase {
         this);
   }
 
-  //setter for the elevator position
+  // setter for the elevator position
   public Command setElevatorPosition(double position) {
     return new RunCommand(() -> this.io.setElevatorPosition(position))
         .unless(beambreakIsObstructed().and(elevatorIsDown()));
   }
 
-  //sets the position as L4
+  // sets the position as L4
   public Command setElevatorPositionL4() {
     System.out.println(elevatorNearL4().getAsBoolean());
 
@@ -176,7 +176,7 @@ public class Elevator extends SubsystemBase {
         .until(elevatorNearL4());
   }
 
-  //sets the position as L3
+  // sets the position as L3
   public Command setElevatorPositionL3() {
     System.out.println(elevatorNearL3().getAsBoolean());
 
@@ -185,7 +185,7 @@ public class Elevator extends SubsystemBase {
         .until(elevatorNearL3());
   }
 
-  //you get the point
+  // you get the point
   public Command setElevatorPositionL2() {
     System.out.println(elevatorNearL2().getAsBoolean());
 
@@ -194,7 +194,7 @@ public class Elevator extends SubsystemBase {
         .until(elevatorNearL2());
   }
 
-  //sets the position for feeding the coral into the elevator
+  // sets the position for feeding the coral into the elevator
   public Command setElevatorPositionFeed() {
     System.out.println(elevatorIsDown().getAsBoolean());
 
@@ -202,81 +202,80 @@ public class Elevator extends SubsystemBase {
         .until(elevatorIsDown());
   }
 
-  //bool if elevator is near L4
+  // bool if elevator is near L4
   public Trigger elevatorNearL4() {
     return new Trigger(
         () ->
             MathUtil.isNear(Constant.elevatorConstants.L4Level, this.inputs.masterPositionRad, 1));
   }
 
-  //bool if elevator is near L3
+  // bool if elevator is near L3
   public Trigger elevatorNearL3() {
     return new Trigger(
         () ->
             MathUtil.isNear(Constant.elevatorConstants.L3Level, this.inputs.masterPositionRad, 1));
   }
 
-  //bool if elevator is near L2
+  // bool if elevator is near L2
   public Trigger elevatorNearL2() {
     return new Trigger(
         () ->
             MathUtil.isNear(Constant.elevatorConstants.L2Level, this.inputs.masterPositionRad, 1));
   }
 
-  //s-e
+  // s-e
   public Trigger higherThanL4() {
     return new Trigger(() -> (this.inputs.masterPositionRad > 20));
   }
 
-  //s-e
+  // s-e
   public Trigger higherThanL3() {
     return new Trigger(() -> (this.inputs.masterPositionRad > elevatorConstants.L3Level));
   }
 
-  //s-e
+  // s-e
   public Command stopCommand() {
     return new InstantCommand(this.io::stop, this);
   }
 
-  //reference for arm
+  // reference for arm
   public void setVoltage(double voltage) {
     this.io.setElevatorVelocity(MathUtil.clamp(voltage, -12.0, 12.0));
   }
 
-  //command for above
+  // command for above
   public Command setVolatageCommand(double voltage) {
     return new RunCommand(() -> this.io.setElevatorVelocity(voltage), this);
   }
 
-  //s-e
+  // s-e
   public Command resetEncoder() {
     return new InstantCommand(this.io::resetEncoder, this);
   }
 
-  //s-e
+  // s-e
   public Trigger beambreakIsObstructed() {
     return new Trigger(() -> this.beambreakInputs.isObstructed);
   }
 
-  //s-e
+  // s-e
   public Trigger limitIsTriggered() {
     return new Trigger(() -> this.LimitSwitchInputs.isObstructed);
   }
 
-  //s-e
+  // s-e
   public Trigger BackupLimitIsTriggerd() {
     return new Trigger(() -> this.LimitSwitchBackupInputs.isObstructed);
   }
 
-  //s-e
+  // s-e
   public Trigger elevatorIsDown() {
     return new Trigger(() -> MathUtil.isNear(0, this.inputs.masterPositionRad, 1));
   }
 
-  //command for manually running the elevator, finer control of constant speed
+  // command for manually running the elevator, finer control of constant speed
   public Command setPercentOutputCommand(double velocityRotPerSecond) {
     setpointInches = velocityRotPerSecond * 1000;
     return new RunCommand(() -> this.io.setPercentOutput(velocityRotPerSecond), this);
   }
-
 }

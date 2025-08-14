@@ -46,7 +46,7 @@ import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
 
-  //essentially pulling the info from the constants within generated
+  // essentially pulling the info from the constants within generated
 
   // TunerConstants doesn't include these constants, so they are declared locally
   static final double ODOMETRY_FREQUENCY =
@@ -60,7 +60,7 @@ public class Drive extends SubsystemBase {
               Math.hypot(TunerConstants.BackLeft.LocationX, TunerConstants.BackLeft.LocationY),
               Math.hypot(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)));
 
-  //configs for the automation program
+  // configs for the automation program
 
   // PathPlanner config constants
   private static final double ROBOT_MASS_KG = 74.088;
@@ -80,7 +80,7 @@ public class Drive extends SubsystemBase {
               1),
           getModuleTranslations());
 
-  //DO NOT TOUCH THIS SECTION
+  // DO NOT TOUCH THIS SECTION
   static final Lock odometryLock = new ReentrantLock();
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
@@ -89,7 +89,7 @@ public class Drive extends SubsystemBase {
   private final Alert gyroDisconnectedAlert =
       new Alert("Disconnected gyro, using kinematics as fallback.", AlertType.kError);
 
-  //ALSO DO NOT TOUCH.
+  // ALSO DO NOT TOUCH.
   private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
   private Rotation2d rawGyroRotation = new Rotation2d();
   private SwerveModulePosition[] lastModulePositions = // For delta tracking
@@ -102,7 +102,7 @@ public class Drive extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
-  //inits for the gyro modules
+  // inits for the gyro modules
   public Drive(
       GyroIO gyroIO,
       ModuleIO flModuleIO,
@@ -155,7 +155,7 @@ public class Drive extends SubsystemBase {
                 (voltage) -> runCharacterization(voltage.in(Volts)), null, this));
   }
 
-  //periodic updates while active
+  // periodic updates while active
   @Override
   public void periodic() {
     odometryLock.lock(); // Prevents odometry updates while reading data
@@ -211,7 +211,7 @@ public class Drive extends SubsystemBase {
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
-    //vision integration
+    // vision integration
     PoseObservation observation;
     while ((observation = BobotState.getVisionObservations().poll()) != null) {
       poseEstimator.addVisionMeasurement(
@@ -376,14 +376,14 @@ public class Drive extends SubsystemBase {
     };
   }
 
-  //spotify boot
+  // spotify boot
   public void playMusic() {
     for (int i = 0; i < 4; i++) {
       modules[i].playMusic();
     }
   }
 
-  //spotify deboot
+  // spotify deboot
   public void pauseMusic() {
     for (int i = 0; i < 4; i++) {
       modules[i].pauseMusic();

@@ -246,9 +246,7 @@ public class RobotContainer {
   }
 
   private void configureDriverButtons() {
-    controller.povLeft().onTrue(new InstantCommand(() -> BobotState.updateNearness("HPS")));
-    controller.povRight().onTrue(new InstantCommand(() -> BobotState.updateNearness("Reef")));
-    controller.povDown().onTrue(new InstantCommand(() -> BobotState.updateNearness("")));
+
     controller
         .povUp()
         .whileTrue(
@@ -423,8 +421,11 @@ public class RobotContainer {
   private void configureTestButtons() {
     testController.a().whileTrue(elevator.setElevatorPosition(Constant.elevatorConstants.L3Level));
 
-    testController.rightTrigger().whileTrue(intake.setVelocityThenStopCommand(-60));
-    testController.leftTrigger().whileTrue(intake.setVelocityThenStopCommand(30));
+    testController.rightTrigger().whileTrue(intake.setVelocityThenStopCommand(15));
+    testController.leftTrigger().whileTrue(intake.setVelocityThenStopCommand(-15));
+
+    testController.rightBumper().whileTrue(intake.setVelocityThenStopCommand(30));
+    testController.leftBumper().whileTrue(intake.setVelocityThenStopCommand(-30));
 
     testController.povUp().whileTrue(arm.setArmPosition(.6));
     testController.povDown().whileTrue(arm.setArmPosition(.03));
